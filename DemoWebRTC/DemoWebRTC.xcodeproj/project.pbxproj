@@ -16,6 +16,7 @@
 		6D9EFD691D88EBDC0023182B /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9EFD681D88EBDC0023182B /* RoomViewController.m */; };
 		6D9EFD6F1D88F3F10023182B /* RoomTextInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9EFD6E1D88F3F10023182B /* RoomTextInputViewCell.m */; };
 		6D9EFD751D88F6C30023182B /* VideoChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9EFD741D88F6C30023182B /* VideoChatViewController.m */; };
+		6DFF4F3E1D93E33800DF310A /* SocketIOOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF4F3D1D93E33800DF310A /* SocketIOOperation.mm */; };
 		D131692A2190E8C45422CA8E /* libPods-DemoWebRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC569CEE484AB272FBA7597C /* libPods-DemoWebRTC.a */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,8 @@
 		6D9EFD6E1D88F3F10023182B /* RoomTextInputViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomTextInputViewCell.m; sourceTree = "<group>"; };
 		6D9EFD731D88F6C30023182B /* VideoChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoChatViewController.h; sourceTree = "<group>"; };
 		6D9EFD741D88F6C30023182B /* VideoChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoChatViewController.m; sourceTree = "<group>"; };
+		6DFF4F3C1D93E33800DF310A /* SocketIOOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOOperation.h; sourceTree = "<group>"; };
+		6DFF4F3D1D93E33800DF310A /* SocketIOOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SocketIOOperation.mm; sourceTree = "<group>"; };
 		EC569CEE484AB272FBA7597C /* libPods-DemoWebRTC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoWebRTC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -103,6 +106,7 @@
 		6D9EFD401D87FDB80023182B /* DemoWebRTC */ = {
 			isa = PBXGroup;
 			children = (
+				6DFF4F3B1D93E33800DF310A /* socketio */,
 				6D9EFD451D87FDB80023182B /* AppDelegate.h */,
 				6D9EFD461D87FDB80023182B /* AppDelegate.m */,
 				6D9EFD671D88EBDC0023182B /* RoomViewController.h */,
@@ -143,6 +147,15 @@
 				6D9EFD5C1D87FDB80023182B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6DFF4F3B1D93E33800DF310A /* socketio */ = {
+			isa = PBXGroup;
+			children = (
+				6DFF4F3C1D93E33800DF310A /* SocketIOOperation.h */,
+				6DFF4F3D1D93E33800DF310A /* SocketIOOperation.mm */,
+			);
+			path = socketio;
 			sourceTree = "<group>";
 		};
 		BB4AD4C9218BCF9BBAF82CC1 /* Frameworks */ = {
@@ -264,7 +277,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		631B3D1720CA0CB014D5CE3B /* [CP] Embed Pods Frameworks */ = {
@@ -306,6 +319,7 @@
 			files = (
 				6D9EFD751D88F6C30023182B /* VideoChatViewController.m in Sources */,
 				6D9EFD471D87FDB80023182B /* AppDelegate.m in Sources */,
+				6DFF4F3E1D93E33800DF310A /* SocketIOOperation.mm in Sources */,
 				6D9EFD6F1D88F3F10023182B /* RoomTextInputViewCell.m in Sources */,
 				6D9EFD441D87FDB80023182B /* main.m in Sources */,
 				6D9EFD691D88EBDC0023182B /* RoomViewController.m in Sources */,

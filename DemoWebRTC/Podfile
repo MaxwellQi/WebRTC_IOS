@@ -4,5 +4,6 @@ platform :ios, '8.3'
 
 target 'DemoWebRTC' do
 	pod 'AppRTC'
+	pod 'SocketIO-Client-CPP'
 end
 

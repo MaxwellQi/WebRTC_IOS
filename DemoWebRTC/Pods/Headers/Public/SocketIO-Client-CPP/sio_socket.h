@@ -1,0 +1,1 @@
+../../../SocketIO-Client-CPP/Headers/sio_socket.h
