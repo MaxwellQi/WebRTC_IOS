@@ -7,9 +7,9 @@
 //
 
 #import "ViewController.h"
-
+#import "socketio/SocketIOOperation.h"
 @interface ViewController ()
-
+@property(nonatomic) SocketIOOperation *socketOperation;
 @end
 
 @implementation ViewController
@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    _socketOperation = new SocketIOOperation();
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,5 +26,6 @@
 }
 
 - (IBAction)onpressedbuttonLogin:(id)sender {
+    _socketOperation->beginConnection("heheda");
 }
 @end
