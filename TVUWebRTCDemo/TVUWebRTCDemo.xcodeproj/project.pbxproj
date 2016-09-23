@@ -15,6 +15,7 @@
 		6DB5F1DE1D94F43D00B7D749 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DB5F1DC1D94F43D00B7D749 /* LaunchScreen.storyboard */; };
 		6DB5F1E91D94F43D00B7D749 /* TVUWebRTCDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5F1E81D94F43D00B7D749 /* TVUWebRTCDemoTests.m */; };
 		6DB5F1F41D94F43D00B7D749 /* TVUWebRTCDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5F1F31D94F43D00B7D749 /* TVUWebRTCDemoUITests.m */; };
+		6DB5F2041D94F66300B7D749 /* SocketIOOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5F2031D94F66300B7D749 /* SocketIOOperation.mm */; };
 		D0EDF19C199323F8BA24B69E /* libPods-TVUWebRTCDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0575F84DDCCAC69FE7F6037 /* libPods-TVUWebRTCDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,8 @@
 		6DB5F1EF1D94F43D00B7D749 /* TVUWebRTCDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVUWebRTCDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DB5F1F31D94F43D00B7D749 /* TVUWebRTCDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TVUWebRTCDemoUITests.m; sourceTree = "<group>"; };
 		6DB5F1F51D94F43D00B7D749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DB5F2021D94F66300B7D749 /* SocketIOOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOOperation.h; sourceTree = "<group>"; };
+		6DB5F2031D94F66300B7D749 /* SocketIOOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SocketIOOperation.mm; sourceTree = "<group>"; };
 		94938637FEB3B374AE46F631 /* Pods-TVUWebRTCDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVUWebRTCDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TVUWebRTCDemo/Pods-TVUWebRTCDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		96EA013521F175E32D2AEBB9 /* Pods-TVUWebRTCDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVUWebRTCDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TVUWebRTCDemo/Pods-TVUWebRTCDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D0575F84DDCCAC69FE7F6037 /* libPods-TVUWebRTCDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TVUWebRTCDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +120,7 @@
 		6DB5F1CD1D94F43D00B7D749 /* TVUWebRTCDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6DB5F2011D94F66300B7D749 /* socketio */,
 				6DB5F1D11D94F43D00B7D749 /* AppDelegate.h */,
 				6DB5F1D21D94F43D00B7D749 /* AppDelegate.m */,
 				6DB5F1D41D94F43D00B7D749 /* ViewController.h */,
@@ -154,6 +158,15 @@
 				6DB5F1F51D94F43D00B7D749 /* Info.plist */,
 			);
 			path = TVUWebRTCDemoUITests;
+			sourceTree = "<group>";
+		};
+		6DB5F2011D94F66300B7D749 /* socketio */ = {
+			isa = PBXGroup;
+			children = (
+				6DB5F2021D94F66300B7D749 /* SocketIOOperation.h */,
+				6DB5F2031D94F66300B7D749 /* SocketIOOperation.mm */,
+			);
+			path = socketio;
 			sourceTree = "<group>";
 		};
 		E1E44E355896AA12B05B91E4 /* Frameworks */ = {
@@ -347,6 +360,7 @@
 			files = (
 				6DB5F1D61D94F43D00B7D749 /* ViewController.m in Sources */,
 				6DB5F1D31D94F43D00B7D749 /* AppDelegate.m in Sources */,
+				6DB5F2041D94F66300B7D749 /* SocketIOOperation.mm in Sources */,
 				6DB5F1D01D94F43D00B7D749 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
