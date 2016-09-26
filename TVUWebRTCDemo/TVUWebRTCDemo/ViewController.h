@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 - (IBAction)onpressedbuttonLogin:(id)sender;
+- (IBAction)onpressedbuttonCall:(id)sender;
 
 @end
 
