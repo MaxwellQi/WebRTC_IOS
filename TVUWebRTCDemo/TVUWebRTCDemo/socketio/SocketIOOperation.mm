@@ -6,12 +6,16 @@
 //  Copyright © 2016 MaxwellQi. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #include "SocketIOOperation.h"
 #include <iostream>
 using namespace std;
 using namespace sio;
 #include <string.h>
 
+#define WebRTCServer "http://10.12.23.232:9000"
+
+const char* getUserName();
 SocketIOOperation::SocketIOOperation()
 {
 }
@@ -32,16 +36,28 @@ SocketIOOperation * SocketIOOperation::getInstance()
 void SocketIOOperation::onopen()
 {
     printf("connect succ\n");
-    std::string s("zhangqi-ios");
-    sclient.socket()->emit("login", s);
-    
+    std::string username(getUserName());
+    printf("qizhang---debug---login params---%s",username.c_str());
+    sclient.socket()->emit("login",username);
+}
+
+const char* getUserName()
+{
+    NSDictionary *dict = @{@"username":@"111111"};
+    if ([NSJSONSerialization isValidJSONObject:dict]) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *username_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        return [username_json UTF8String];
+    }
+    return NULL;
 }
 
 void SocketIOOperation::callPhone()
 {
     printf("call others\n");
-    std::string s("borisyang-ios");
-    sclient.socket()->emit("call_request",s);
+//    std::string s("222222");
+    
     
 }
 
@@ -49,7 +65,7 @@ void SocketIOOperation::postresponse_tvu()
 {
     printf("response\n");
 //    std::string s("zhangqi-ios");
-    std::string s("borisyang-ios");
+    std::string s("222222");
     sclient.socket()->emit("call_response",s);
 }
 
@@ -86,17 +102,28 @@ int SocketIOOperation::beginConnection(const char *url)
 //                                                                             printf("socket.io---debug----call request result:%d",res);
 //                                                                         }));
     
+    sclient.socket()->on("call_response", sio::socket::event_listener_aux([&](string const&name,
+                                                                      message::ptr const& data,bool isAck,message::list &ack_resp)
+                                                                  {
+                                                                      bool res = data->get_map()["success"]->get_bool();
+                                                                      
+                                                                      printf("socket.io---debug----call response result:%d\n",res);
+                                                                      
+                                                                      
+                                                                  }));
+    
     
     
     // begin connect
-    sclient.connect("http://10.12.23.232:9000");
+    sclient.connect(WebRTCServer);
     
     return 0;
 }
 
-int SocketIOOperation::login(const char * username)
+int SocketIOOperation::login(const char* username)
 {
-
+    string name(username);
+    sclient.socket()->emit("call_request",name);
     return 0;
 }
 

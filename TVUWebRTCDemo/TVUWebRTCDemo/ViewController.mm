@@ -18,8 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     _socketOperation = new SocketIOOperation();
-    _socketOperation->beginConnection("heheda"); // login
-    
+    _socketOperation->beginConnection("heheda"); // connection
 }
 
 - (void)postResponse
