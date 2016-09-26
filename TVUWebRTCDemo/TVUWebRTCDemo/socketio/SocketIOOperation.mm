@@ -15,9 +15,12 @@ using namespace sio;
 
 #define WebRTCServer "http://10.12.23.232:9000"
 
+int socketioStatus;
+
 const char* getUserName();
 SocketIOOperation::SocketIOOperation()
 {
+    socketioStatus = 0;
 }
 
 SocketIOOperation::~SocketIOOperation()
@@ -44,6 +47,18 @@ void SocketIOOperation::onopen()
 const char* getUserName()
 {
     NSDictionary *dict = @{@"username":@"111111"};
+    if ([NSJSONSerialization isValidJSONObject:dict]) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *username_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        return [username_json UTF8String];
+    }
+    return NULL;
+}
+
+const char* getResponseParam()
+{
+    NSDictionary *dict = @{@"to":@"111111",@"response":@"true"};
     if ([NSJSONSerialization isValidJSONObject:dict]) {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
@@ -94,21 +109,31 @@ int SocketIOOperation::beginConnection(const char *url)
 
                                                                   }));
     // bind other event
-//    sclient.socket()->on("call_request", sio::socket::event_listener_aux([&](string const&name,
-//                                                                             message::ptr const& data,bool isAck,message::list &ack_resp)
-//                                                                         {
+    sclient.socket()->on("call_request", sio::socket::event_listener_aux([&](string const&name,
+                                                                             message::ptr const& data,bool isAck,message::list &ack_resp)
+                                                                         {
+                                                                             printf("get call request\n");
 //                                                                             bool res = data->get_map()["success"]->get_bool();
 //                                                                             
 //                                                                             printf("socket.io---debug----call request result:%d",res);
-//                                                                         }));
+                                                                             
+                                                                             // response
+                                                                             string responseParam(getResponseParam());
+                                                                             sclient.socket()->emit("call_response",responseParam);
+                                                                             printf("sent call response\n");
+                                                                             
+                                                                         }));
+    
+    
     
     sclient.socket()->on("call_response", sio::socket::event_listener_aux([&](string const&name,
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
-                                                                      bool res = data->get_map()["success"]->get_bool();
-                                                                      
-                                                                      printf("socket.io---debug----call response result:%d\n",res);
-                                                                      
+                                                                      printf("get call response\n");
+//                                                                      bool res = data->get_map()["success"]->get_bool();
+//                                                                      
+//                                                                      printf("socket.io---debug----call response result:%d\n",res);
+                                                                      socketioStatus = 1;
                                                                       
                                                                   }));
     
@@ -119,6 +144,7 @@ int SocketIOOperation::beginConnection(const char *url)
     
     return 0;
 }
+
 
 int SocketIOOperation::login(const char* username)
 {

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "socketio/SocketIOOperation.h"
+extern int socketioStatus;
 @interface ViewController ()
 @property(nonatomic) SocketIOOperation *socketOperation;
 @end
@@ -21,6 +22,11 @@
     _socketOperation->beginConnection("heheda"); // connection
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
 - (void)postResponse
 {
     _socketOperation->postresponse_tvu();
@@ -30,6 +36,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (IBAction)onpressedbuttonCall:(id)sender {
 //    _socketOperation->callPhone();
