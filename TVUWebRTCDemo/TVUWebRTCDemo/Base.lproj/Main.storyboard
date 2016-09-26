@@ -20,7 +20,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gt-Uh-2id">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="148"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input your name.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dYx-3s-vfZ">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="call number..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dYx-3s-vfZ">
                                         <rect key="frame" x="144" y="30" width="312" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="2f5-ro-CF1"/>
@@ -29,20 +29,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CYb-Wn-Glm">
-                                        <rect key="frame" x="144" y="80" width="109" height="30"/>
-                                        <color key="backgroundColor" red="0.19740346698079203" green="0.31886751955771253" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="GJp-j5-Mcv"/>
-                                            <constraint firstAttribute="width" constant="109" id="gTF-c5-Evs"/>
-                                        </constraints>
-                                        <state key="normal" title="登陆">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onpressedbuttonLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WEt-Dj-iyp"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请登陆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RK8-6r-pHg">
                                         <rect key="frame" x="351" y="84" width="105" height="21"/>
                                         <constraints>
@@ -53,14 +39,18 @@
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDB-li-by1">
-                                        <rect key="frame" x="260" y="118" width="80" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yDB-li-by1">
+                                        <rect key="frame" x="144" y="80" width="122" height="30"/>
                                         <color key="backgroundColor" red="0.095045705460000005" green="0.18296968559999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="345-8a-goH"/>
+                                            <constraint firstAttribute="width" constant="122" id="9c1-i2-rjG"/>
+                                        </constraints>
                                         <state key="normal" title="Call">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onpressedbuttonCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eNf-iq-q64"/>
+                                            <action selector="onpressedbuttonCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xPe-vP-4sK"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -68,11 +58,11 @@
                                 <constraints>
                                     <constraint firstItem="RK8-6r-pHg" firstAttribute="trailing" secondItem="dYx-3s-vfZ" secondAttribute="trailing" id="6mo-i3-PcO"/>
                                     <constraint firstAttribute="height" constant="148" id="7t3-bs-ZQ6"/>
-                                    <constraint firstItem="CYb-Wn-Glm" firstAttribute="top" secondItem="dYx-3s-vfZ" secondAttribute="bottom" constant="20" id="OpQ-cG-2MQ"/>
+                                    <constraint firstItem="yDB-li-by1" firstAttribute="leading" secondItem="dYx-3s-vfZ" secondAttribute="leading" id="Sxf-ks-0PR"/>
                                     <constraint firstItem="RK8-6r-pHg" firstAttribute="top" secondItem="dYx-3s-vfZ" secondAttribute="bottom" constant="24" id="anh-BX-HZx"/>
                                     <constraint firstItem="dYx-3s-vfZ" firstAttribute="centerX" secondItem="4gt-Uh-2id" secondAttribute="centerX" id="eCP-9u-SZV"/>
                                     <constraint firstItem="dYx-3s-vfZ" firstAttribute="top" secondItem="4gt-Uh-2id" secondAttribute="top" constant="30" id="iYt-El-ujr"/>
-                                    <constraint firstItem="CYb-Wn-Glm" firstAttribute="leading" secondItem="dYx-3s-vfZ" secondAttribute="leading" id="q0h-jZ-7E1"/>
+                                    <constraint firstItem="yDB-li-by1" firstAttribute="top" secondItem="dYx-3s-vfZ" secondAttribute="bottom" constant="20" id="znw-Wr-b36"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -84,7 +74,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="loginBtn" destination="CYb-Wn-Glm" id="jdW-hw-4nD"/>
                         <outlet property="statusLabel" destination="RK8-6r-pHg" id="NBG-Sr-EMc"/>
                         <outlet property="userNameField" destination="dYx-3s-vfZ" id="qUH-xq-Mh0"/>
                     </connections>

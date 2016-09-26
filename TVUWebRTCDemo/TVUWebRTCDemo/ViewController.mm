@@ -18,6 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     _socketOperation = new SocketIOOperation();
+    _socketOperation->beginConnection("heheda"); // login
     
 }
 
@@ -29,17 +30,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)onpressedbuttonLogin:(id)sender {
-    NSString *userName = self.userNameField.text;
-//    NSArray *userNameArr = @[userName];
-//    NSJSONSerialization *userNameJson = [NSJSONSerialization JE]
-//    
-//    NSDictionary *userNameDict = @{userName:};
-    
-    
-    _socketOperation->beginConnection("heheda");
 }
 
 - (IBAction)onpressedbuttonCall:(id)sender {

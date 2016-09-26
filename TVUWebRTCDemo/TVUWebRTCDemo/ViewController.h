@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 @interface ViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UITextField *userNameField;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
-- (IBAction)onpressedbuttonLogin:(id)sender;
 - (IBAction)onpressedbuttonCall:(id)sender;
 
 @end
