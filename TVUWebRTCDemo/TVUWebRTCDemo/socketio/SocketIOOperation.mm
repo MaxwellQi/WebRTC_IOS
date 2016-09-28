@@ -17,6 +17,7 @@ using namespace sio;
 #include <string.h>
 
 int socketioStatus;
+string remoteSDP;
 
 const char* getUserName();
 SocketIOOperation::SocketIOOperation()
@@ -99,6 +100,32 @@ void SocketIOOperation::postresponse_tvu()
     sclient.socket()->emit("call_response",s);
 }
 
+void SocketIOOperation::postanswer(const char* sdp)
+{
+    string strsdp(sdp);
+    NSDictionary *dict = @{@"to":@"222222",@"type":@"answer",@"sdp":[NSString stringWithUTF8String:sdp]};
+    if ([NSJSONSerialization isValidJSONObject:dict]) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *offer_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        string answerparam([offer_json UTF8String]);
+        sclient.socket()->emit("answer",answerparam);
+    }
+}
+
+void SocketIOOperation::postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex)
+{
+    NSDictionary *dict = @{@"to":@"222222",@"candidate":[NSString stringWithUTF8String:candidate],@"sdpMid":[NSString stringWithUTF8String:sdpMid],@"sdpMLineIndex":[NSString stringWithUTF8String:sdpMLineIndex]};
+    
+    if ([NSJSONSerialization isValidJSONObject:dict]) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *offer_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        string iceparam([offer_json UTF8String]);
+        sclient.socket()->emit("ice",iceparam);
+    }
+}
+
 //static int i = 0;
 //void * SocketIOOperation::PostResponse(void *arg)
 //{
@@ -152,14 +179,15 @@ int SocketIOOperation::beginConnection(const char *url)
 //)                                                                      data.get_string();
                                                                       printf("------------offer begin----------\n");
                                                                       printf("from %s\n",data->get_string().c_str());
+                                                                      remoteSDP = data->get_string();
                                                                       printf("------------offer end----------\n");
-                                                                      
-                                                                    
-
                                                                   }));
-    
-    
-    
+    sclient.socket()->on("ice", sio::socket::event_listener_aux([&](string const&name,
+                                                                      message::ptr const& data,bool isAck,message::list &ack_resp)
+                                                                  {
+                                                                      printf("%s",data->get_string().c_str());
+                                                                  }));
+
     // begin connect
     sclient.connect(WebRTCServer);
     

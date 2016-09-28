@@ -24,6 +24,8 @@ public:
     int login(const char* username);
     void callPhone();
     void postresponse_tvu();
+    void postanswer(const char* sdp);
+    void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
     
 private:
     sio::client sclient;

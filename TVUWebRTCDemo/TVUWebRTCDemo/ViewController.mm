@@ -24,9 +24,11 @@
 #import <libjingle_peerconnection/RTCVideoTrack.h>
 #import <libjingle_peerconnection/RTCICECandidate.h>
 #import <libjingle_peerconnection/RTCSessionDescription.h>
+#import <AppRTC/RTCICECandidate+JSON.h>
 #import <AVFoundation/AVFoundation.h>
 #import "Const.h"
 extern int socketioStatus;
+extern std::string remoteSDP;
 @interface ViewController ()<RTCPeerConnectionDelegate,RTCSessionDescriptionDelegate>
 @property(nonatomic) SocketIOOperation *socketOperation;
 
@@ -34,6 +36,9 @@ extern int socketioStatus;
 @property (nonatomic,strong)RTCPeerConnection *peerConnection;
 @property (nonatomic,strong) RTCMediaStream *localStream;
 @property (nonatomic,strong) RTCAudioTrack *audioTrack;
+
+@property (nonatomic,strong) NSString *m_strsdp;
+@property (nonatomic,strong) NSString *m_stricecandidate;
 @end
 
 @implementation ViewController
@@ -112,10 +117,10 @@ extern int socketioStatus;
         _audioTrack = [self.pcFactory audioTrackWithID:@"ARDAMSa0"];
         [_localStream addAudioTrack:_audioTrack];
         
-        RTCVideoTrack *localVideoTrack = [self createLocalVideoTrack];
-        if (localVideoTrack) {
-            [_localStream addVideoTrack:localVideoTrack];
-        }
+//        RTCVideoTrack *localVideoTrack = [self createLocalVideoTrack];
+//        if (localVideoTrack) {
+//            [_localStream addVideoTrack:localVideoTrack];
+//        }
         
     }
     return _localStream;
@@ -125,8 +130,6 @@ extern int socketioStatus;
 {
     [super viewWillAppear:animated];
     
-    
-   
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -136,11 +139,20 @@ extern int socketioStatus;
                                                                              optionalConstraints: nil];
     
     [self.peerConnection createOfferWithDelegate:self constraints:constraints];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+        if (granted) {
+            NSLog(@"------------yes-----------");
+        }else{
+            NSLog(@"------------no-----------");
+        }
+    }];
     
     _socketOperation = new SocketIOOperation();
     _socketOperation->beginConnection("heheda"); // connection
@@ -152,9 +164,11 @@ extern int socketioStatus;
 didCreateSessionDescription:(RTCSessionDescription *)sdp
                  error:(NSError *)error
 {
-
     [self.peerConnection setLocalDescriptionWithDelegate:NULL sessionDescription:sdp];
-
+    self.m_strsdp = [sdp description];
+    
+    
+    _socketOperation->postanswer([self.m_strsdp UTF8String]);
 }
 
 // Called when setting a local or remote description.
@@ -210,7 +224,14 @@ didSetSessionDescriptionWithError:(NSError *)error
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
        gotICECandidate:(RTCICECandidate *)candidate
 {
-    NSLog(@"%s",__func__);
+ 
+    self.m_stricecandidate = [candidate description];
+    NSData *data = [candidate JSONData];
+    
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:NULL];
+    NSString *candidateStr = (NSString *)[dict objectForKey:@"candidate"];
+    NSLog(@"%@-----------%ld-----------%@",candidate.sdpMid,(long)candidate.sdpMLineIndex,candidateStr);
+    _socketOperation->postice([candidateStr UTF8String], [candidate.sdpMid UTF8String], [[NSString stringWithFormat:@"%ld",(long)candidate.sdpMLineIndex] UTF8String]);
 }
 
 // New data channel has been opened.
