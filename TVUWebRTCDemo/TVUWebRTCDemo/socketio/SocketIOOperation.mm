@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #include "SocketIOOperation.h"
 #include <iostream>
+#import <AppRTC/ARDAppClient.h>
+#import <AppRTC/RTCSessionDescription+JSON.h>
 using namespace std;
 using namespace sio;
 #include <string.h>
 
 #define WebRTCServer "http://10.12.23.232:9000"
-
+//#define WebRTCServer "https://10.12.23.232:9090"
 int socketioStatus;
 
 const char* getUserName();
@@ -58,7 +60,7 @@ const char* getUserName()
 
 const char* getResponseParam()
 {
-    NSDictionary *dict = @{@"to":@"111111",@"response":@"true"};
+    NSDictionary *dict = @{@"to":@"222222",@"response":@"true"};
     if ([NSJSONSerialization isValidJSONObject:dict]) {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
@@ -67,6 +69,20 @@ const char* getResponseParam()
     }
     return NULL;
 }
+
+const char* getOfferParam()
+{
+    RTCSessionDescription *rtcsession = [RTCSessionDescription descriptionFromJSONDictionary:NULL];
+    NSDictionary *dict = @{@"to":@"222222",@"type":@"answer",@"sdp":rtcsession};
+    if ([NSJSONSerialization isValidJSONObject:dict]) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *offer_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        return [offer_json UTF8String];
+    }
+    return NULL;
+}
+
 
 void SocketIOOperation::callPhone()
 {
@@ -112,11 +128,6 @@ int SocketIOOperation::beginConnection(const char *url)
     sclient.socket()->on("call_request", sio::socket::event_listener_aux([&](string const&name,
                                                                              message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                          {
-                                                                             printf("get call request\n");
-//                                                                             bool res = data->get_map()["success"]->get_bool();
-//                                                                             
-//                                                                             printf("socket.io---debug----call request result:%d",res);
-                                                                             
                                                                              // response
                                                                              string responseParam(getResponseParam());
                                                                              sclient.socket()->emit("call_response",responseParam);
@@ -130,11 +141,22 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
                                                                       printf("get call response\n");
-//                                                                      bool res = data->get_map()["success"]->get_bool();
-//                                                                      
-//                                                                      printf("socket.io---debug----call response result:%d\n",res);
+                                                                      printf("%s",data->get_string().c_str());
                                                                       socketioStatus = 1;
+                                                                  }));
+    
+    sclient.socket()->on("offer", sio::socket::event_listener_aux([&](string const&name,
+                                                                      message::ptr const& data,bool isAck,message::list &ack_resp)
+                                                                  {
+//                                                                      printf("%s",data->get_string().c_str());
                                                                       
+//)                                                                      data.get_string();
+                                                                      printf("------------offer begin----------\n");
+                                                                      printf("from %s\n",data->get_string().c_str());
+                                                                      printf("------------offer end----------\n");
+                                                                      
+                                                                    
+
                                                                   }));
     
     

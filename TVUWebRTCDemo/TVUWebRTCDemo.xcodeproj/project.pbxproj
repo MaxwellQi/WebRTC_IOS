@@ -247,6 +247,7 @@
 				TargetAttributes = {
 					6DB5F1CA1D94F43D00B7D749 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = YDEVQQ22JR;
 					};
 					6DB5F1E31D94F43D00B7D749 = {
 						CreatedOnToolsVersion = 7.3;
@@ -505,6 +506,7 @@
 			baseConfigurationReference = 94938637FEB3B374AE46F631 /* Pods-TVUWebRTCDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YDEVQQ22JR;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TVUWebRTCDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -518,6 +520,7 @@
 			baseConfigurationReference = 96EA013521F175E32D2AEBB9 /* Pods-TVUWebRTCDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YDEVQQ22JR;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TVUWebRTCDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
