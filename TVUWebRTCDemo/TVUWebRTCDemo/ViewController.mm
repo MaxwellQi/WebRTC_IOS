@@ -8,15 +8,22 @@
 
 #import "ViewController.h"
 #import "socketio/SocketIOOperation.h"
-#import <RTCICEServer.h>
-#import <RTCPeerConnection.h>
-#import <RTCPeerConnectionFactory.h>
-#import <RTCMediaStream.h>
-#import <RTCAudioTrack.h>
-#import <RTCMediaConstraints.h>
-#import <RTCSessionDescriptionDelegate.h>
-#import <RTCPair.h>
-#import <RTCVideoCapturer.h>
+#import <libjingle_peerconnection/RTCICEServer.h>
+#import <libjingle_peerconnection/RTCPeerConnection.h>
+#import <libjingle_peerconnection/RTCPeerConnectionFactory.h>
+#import <libjingle_peerconnection/RTCMediaStream.h>
+#import <libjingle_peerconnection/RTCAudioTrack.h>
+#import <libjingle_peerconnection/RTCMediaConstraints.h>
+#import <libjingle_peerconnection/RTCSessionDescriptionDelegate.h>
+#import <libjingle_peerconnection/RTCPeerConnectionDelegate.h>
+#import <libjingle_peerconnection/RTCPair.h>
+#import <libjingle_peerconnection/RTCVideoCapturer.h>
+#import <libjingle_peerconnection/RTCPeerConnectionFactory.h>
+#import <libjingle_peerconnection/RTCPeerConnectionInterface.h>
+#import <libjingle_peerconnection/RTCAVFoundationVideoSource.h>
+#import <libjingle_peerconnection/RTCVideoTrack.h>
+#import <libjingle_peerconnection/RTCICECandidate.h>
+#import <libjingle_peerconnection/RTCSessionDescription.h>
 #import <AVFoundation/AVFoundation.h>
 #import "Const.h"
 extern int socketioStatus;
@@ -43,9 +50,11 @@ extern int socketioStatus;
 {
     if (!_peerConnection) {
         [RTCPeerConnectionFactory initializeSSL];
-        _peerConnection = [self.pcFactory peerConnectionWithICEServers:[NSMutableArray arrayWithObject:[self defaultSTUNServer]] constraints:nil delegate:self];
+    
+         RTCConfiguration *config = [[RTCConfiguration alloc] init];
+        _peerConnection = [self.pcFactory peerConnectionWithConfiguration:config constraints:nil delegate:self];
         
-//        [_peerConnection addStream:self.localStream];
+        [self.peerConnection addStream:self.localStream];
     }
     return _peerConnection;
 }
@@ -126,7 +135,7 @@ extern int socketioStatus;
                                         @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
                                                                              optionalConstraints: nil];
     
-    [_peerConnection createOfferWithDelegate:self constraints:constraints];
+    [self.peerConnection createOfferWithDelegate:self constraints:constraints];
 }
 
 - (void)viewDidLoad {
@@ -143,8 +152,9 @@ extern int socketioStatus;
 didCreateSessionDescription:(RTCSessionDescription *)sdp
                  error:(NSError *)error
 {
-    NSLog(@"qizhang-------------debug-----------");
+
     [self.peerConnection setLocalDescriptionWithDelegate:NULL sessionDescription:sdp];
+
 }
 
 // Called when setting a local or remote description.

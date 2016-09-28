@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D5FFE8F1D9B91B60057EF63 /* TVUARDClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5FFE8E1D9B91B60057EF63 /* TVUARDClient.m */; };
 		6DB5F1D01D94F43D00B7D749 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5F1CF1D94F43D00B7D749 /* main.m */; };
 		6DB5F1D31D94F43D00B7D749 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5F1D21D94F43D00B7D749 /* AppDelegate.m */; };
 		6DB5F1D61D94F43D00B7D749 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5F1D51D94F43D00B7D749 /* ViewController.mm */; };
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		6D5FFE8C1D9B5FC60057EF63 /* Const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
+		6D5FFE8D1D9B91B60057EF63 /* TVUARDClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVUARDClient.h; path = socketio/TVUARDClient.h; sourceTree = "<group>"; };
+		6D5FFE8E1D9B91B60057EF63 /* TVUARDClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVUARDClient.m; path = socketio/TVUARDClient.m; sourceTree = "<group>"; };
 		6DB5F1CB1D94F43D00B7D749 /* TVUWebRTCDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVUWebRTCDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DB5F1CF1D94F43D00B7D749 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6DB5F1D11D94F43D00B7D749 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				6DB5F2011D94F66300B7D749 /* socketio */,
 				6DB5F1D11D94F43D00B7D749 /* AppDelegate.h */,
 				6DB5F1D21D94F43D00B7D749 /* AppDelegate.m */,
+				6D5FFE8D1D9B91B60057EF63 /* TVUARDClient.h */,
+				6D5FFE8E1D9B91B60057EF63 /* TVUARDClient.m */,
 				6DB5F1D41D94F43D00B7D749 /* ViewController.h */,
 				6DB5F1D51D94F43D00B7D749 /* ViewController.mm */,
 				6D5FFE8C1D9B5FC60057EF63 /* Const.h */,
@@ -364,6 +369,7 @@
 				6DB5F1D61D94F43D00B7D749 /* ViewController.mm in Sources */,
 				6DB5F1D31D94F43D00B7D749 /* AppDelegate.m in Sources */,
 				6DB5F2041D94F66300B7D749 /* SocketIOOperation.mm in Sources */,
+				6D5FFE8F1D9B91B60057EF63 /* TVUARDClient.m in Sources */,
 				6DB5F1D01D94F43D00B7D749 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
