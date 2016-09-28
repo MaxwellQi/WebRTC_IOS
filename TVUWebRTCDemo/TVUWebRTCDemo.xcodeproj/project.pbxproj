@@ -37,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D5FFE8C1D9B5FC60057EF63 /* Const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
 		6DB5F1CB1D94F43D00B7D749 /* TVUWebRTCDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVUWebRTCDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DB5F1CF1D94F43D00B7D749 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6DB5F1D11D94F43D00B7D749 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 				6DB5F1D21D94F43D00B7D749 /* AppDelegate.m */,
 				6DB5F1D41D94F43D00B7D749 /* ViewController.h */,
 				6DB5F1D51D94F43D00B7D749 /* ViewController.mm */,
+				6D5FFE8C1D9B5FC60057EF63 /* Const.h */,
 				6DB5F1D71D94F43D00B7D749 /* Main.storyboard */,
 				6DB5F1DA1D94F43D00B7D749 /* Assets.xcassets */,
 				6DB5F1DC1D94F43D00B7D749 /* LaunchScreen.storyboard */,

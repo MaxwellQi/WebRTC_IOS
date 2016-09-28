@@ -11,12 +11,11 @@
 #include <iostream>
 #import <AppRTC/ARDAppClient.h>
 #import <AppRTC/RTCSessionDescription+JSON.h>
+#import "Const.h"
 using namespace std;
 using namespace sio;
 #include <string.h>
 
-#define WebRTCServer "http://10.12.23.232:9000"
-//#define WebRTCServer "https://10.12.23.232:9090"
 int socketioStatus;
 
 const char* getUserName();
