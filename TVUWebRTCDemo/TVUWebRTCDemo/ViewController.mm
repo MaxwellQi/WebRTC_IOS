@@ -131,16 +131,37 @@ extern std::string remoteSessionDes;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+//    RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
+//                                        @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
+//                                                                             optionalConstraints: nil];
+//
+//    [self.peerConnection createOfferWithDelegate:self constraints:constraints];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
-                                        @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
-                                                                             optionalConstraints: nil];
+
     
-    [self.peerConnection createOfferWithDelegate:self constraints:constraints];
+    // create answer
+    NSString *remoteSessionDescription = [NSString stringWithUTF8String:remoteSessionDes.c_str()];
+    
+    if ([remoteSessionDescription length] > 0) {
+        NSData *jsonData = [remoteSessionDescription dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:NULL];
+        NSString *sdpstr = [dic objectForKey:@"sdp"];
+        NSString *sdptype = [dic objectForKey:@"type"];
+        RTCSessionDescription *sessionDescription = [[RTCSessionDescription alloc] initWithType:sdptype sdp:sdpstr];
+        NSLog(@"qizhang---set remote SessionDescription------%@",remoteSessionDescription.description);
+        [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:sessionDescription];
+        
+        
+        RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
+                                            @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
+                                                                                 optionalConstraints: nil];
+
+        [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
+        
+    }
     
 }
 
@@ -166,30 +187,12 @@ extern std::string remoteSessionDes;
 didCreateSessionDescription:(RTCSessionDescription *)sdp
                  error:(NSError *)error
 {
-    NSString *remoteSessionDescription = [NSString stringWithUTF8String:remoteSessionDes.c_str()];
-    
-    if ([remoteSessionDescription length] > 0) {
-        NSData *jsonData = [remoteSessionDescription dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-        NSString *sdpstr = [dic objectForKey:@"sdp"];
-        NSString *sdptype = [dic objectForKey:@"type"];
-        RTCSessionDescription *sessionDescription = [[RTCSessionDescription alloc] initWithType:sdpstr sdp:sdptype];
-        NSLog(@"qizhang---set remote SessionDescription------%@",remoteSessionDescription.description);
-        [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:sessionDescription];
-        
-        
-//        RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
-//                                            @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
-//                                                                                 optionalConstraints: nil];
-//        
-//        [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
-        
+    if (sdp == NULL) {
+        return;
     }
-    
     [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
     self.m_strsdp = [sdp description];
-    
-    _socketOperation->postanswer([self.m_strsdp UTF8String]);
+    _socketOperation->postanswer([[sdp description] UTF8String]);
 }
 
 // Called when setting a local or remote description.

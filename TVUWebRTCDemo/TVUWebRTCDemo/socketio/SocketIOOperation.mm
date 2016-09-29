@@ -102,7 +102,7 @@ void SocketIOOperation::postresponse_tvu()
 
 void SocketIOOperation::postanswer(const char* sdp)
 {
-    string strsdp(sdp);
+    std::string strsdp(sdp);
     NSDictionary *dict = @{@"to":@"222222",@"type":@"answer",@"sdp":[NSString stringWithUTF8String:sdp]};
     if ([NSJSONSerialization isValidJSONObject:dict]) {
         NSError *error;
