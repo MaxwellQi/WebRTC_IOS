@@ -17,7 +17,7 @@ using namespace sio;
 #include <string.h>
 
 int socketioStatus;
-string remoteSDP;
+string remoteSessionDes;
 
 const char* getUserName();
 SocketIOOperation::SocketIOOperation()
@@ -178,8 +178,15 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                       
 //)                                                                      data.get_string();
                                                                       printf("------------offer begin----------\n");
+                                                                      
+//                                                                      std::string sdpremote = data->get_map()["sdp"]->get_string();
+//                                                                      std::string typeremote = data->get_map()["type"]->get_string();
+//                                                                      remoteSDP = sdpremote;
+//                                                                      remoteType = typeremote;
+                                                                      remoteSessionDes = data->get_string();
+                                                                      
                                                                       printf("from %s\n",data->get_string().c_str());
-                                                                      remoteSDP = data->get_string();
+
                                                                       printf("------------offer end----------\n");
                                                                   }));
     sclient.socket()->on("ice", sio::socket::event_listener_aux([&](string const&name,

@@ -29,6 +29,8 @@
 #import "Const.h"
 extern int socketioStatus;
 extern std::string remoteSDP;
+extern std::string remoteType;
+extern std::string remoteSessionDes;
 @interface ViewController ()<RTCPeerConnectionDelegate,RTCSessionDescriptionDelegate>
 @property(nonatomic) SocketIOOperation *socketOperation;
 
@@ -148,9 +150,9 @@ extern std::string remoteSDP;
     
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         if (granted) {
-            NSLog(@"------------yes-----------");
+            NSLog(@"------------have audio permission-----------");
         }else{
-            NSLog(@"------------no-----------");
+            NSLog(@"------------no audio permission-----------");
         }
     }];
     
@@ -164,9 +166,28 @@ extern std::string remoteSDP;
 didCreateSessionDescription:(RTCSessionDescription *)sdp
                  error:(NSError *)error
 {
-    [self.peerConnection setLocalDescriptionWithDelegate:NULL sessionDescription:sdp];
-    self.m_strsdp = [sdp description];
+    NSString *remoteSessionDescription = [NSString stringWithUTF8String:remoteSessionDes.c_str()];
     
+    if ([remoteSessionDescription length] > 0) {
+        NSData *jsonData = [remoteSessionDescription dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+        NSString *sdpstr = [dic objectForKey:@"sdp"];
+        NSString *sdptype = [dic objectForKey:@"type"];
+        RTCSessionDescription *sessionDescription = [[RTCSessionDescription alloc] initWithType:sdpstr sdp:sdptype];
+        NSLog(@"qizhang---set remote SessionDescription------%@",remoteSessionDescription.description);
+        [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:sessionDescription];
+        
+        
+//        RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
+//                                            @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
+//                                                                                 optionalConstraints: nil];
+//        
+//        [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
+        
+    }
+    
+    [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
+    self.m_strsdp = [sdp description];
     
     _socketOperation->postanswer([self.m_strsdp UTF8String]);
 }
