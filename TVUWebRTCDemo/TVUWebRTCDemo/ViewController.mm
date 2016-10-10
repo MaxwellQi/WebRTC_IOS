@@ -74,12 +74,6 @@ extern std::string remoteSessionDes;
 }
 
 - (RTCVideoTrack *)createLocalVideoTrack {
-    // The iOS simulator doesn't provide any sort of camera capture
-    // support or emulation (http://goo.gl/rHAnC1) so don't bother
-    // trying to open a local stream.
-    // TODO(tkchin): local video capture for OSX. See
-    // https://code.google.com/p/webrtc/issues/detail?id=3417.
-    
     RTCVideoTrack *localVideoTrack = nil;
 #if !TARGET_IPHONE_SIMULATOR && TARGET_OS_IPHONE
     
@@ -265,20 +259,14 @@ didSetSessionDescriptionWithError:(NSError *)error
     NSLog(@"%s",__func__);
 }
 
-- (void)postResponse
-{
-    _socketOperation->postresponse_tvu();
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
 - (IBAction)onpressedbuttonCall:(id)sender {
-//    _socketOperation->callPhone();
-//    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(postResponse) userInfo:nil repeats:YES];
+
+    
 }
 
 @end

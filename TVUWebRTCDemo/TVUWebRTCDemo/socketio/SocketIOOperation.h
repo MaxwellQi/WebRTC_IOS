@@ -22,22 +22,13 @@ public:
     ~SocketIOOperation();
     int beginConnection(const char* url);
     int login(const char* username);
-    void callPhone();
-    void postresponse_tvu();
     void postanswer(const char* sdp);
     void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
     
 private:
     sio::client sclient;
     void onopen();
-    void postResponse();
     static SocketIOOperation * m_instance;
-    
-//    static pthread_t m_postResponsethread;
-//    static void * PostResponse(void *arg);
-    
-    
-  
 };
 
 #endif /* SocketIOOperation_hpp */

@@ -70,36 +70,6 @@ const char* getResponseParam()
     return NULL;
 }
 
-const char* getOfferParam()
-{
-    RTCSessionDescription *rtcsession = [RTCSessionDescription descriptionFromJSONDictionary:NULL];
-    NSDictionary *dict = @{@"to":@"222222",@"type":@"answer",@"sdp":rtcsession};
-    if ([NSJSONSerialization isValidJSONObject:dict]) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *offer_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        return [offer_json UTF8String];
-    }
-    return NULL;
-}
-
-
-void SocketIOOperation::callPhone()
-{
-    printf("call others\n");
-//    std::string s("222222");
-    
-    
-}
-
-void SocketIOOperation::postresponse_tvu()
-{
-    printf("response\n");
-//    std::string s("zhangqi-ios");
-    std::string s("222222");
-    sclient.socket()->emit("call_response",s);
-}
-
 void SocketIOOperation::postanswer(const char* sdp)
 {
     std::string strsdp(sdp);
@@ -126,18 +96,6 @@ void SocketIOOperation::postice(const char* candidate,const char* sdpMid,const c
     }
 }
 
-//static int i = 0;
-//void * SocketIOOperation::PostResponse(void *arg)
-//{
-//    i++;
-//    if(i < 10) return NULL;
-//    i= 0;
-//    std::string s("zhangqi-ios");
-//    getInstance()->sclient.socket()->emit("call_response",s);
-//    return NULL;
-//}
-
-
 int SocketIOOperation::beginConnection(const char *url)
 {
     sclient.set_open_listener(std::bind(&SocketIOOperation::onopen, this));
@@ -161,8 +119,6 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                              
                                                                          }));
     
-    
-    
     sclient.socket()->on("call_response", sio::socket::event_listener_aux([&](string const&name,
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
@@ -174,15 +130,7 @@ int SocketIOOperation::beginConnection(const char *url)
     sclient.socket()->on("offer", sio::socket::event_listener_aux([&](string const&name,
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
-//                                                                      printf("%s",data->get_string().c_str());
-                                                                      
-//)                                                                      data.get_string();
                                                                       printf("------------offer begin----------\n");
-                                                                      
-//                                                                      std::string sdpremote = data->get_map()["sdp"]->get_string();
-//                                                                      std::string typeremote = data->get_map()["type"]->get_string();
-//                                                                      remoteSDP = sdpremote;
-//                                                                      remoteType = typeremote;
                                                                       remoteSessionDes = data->get_string();
                                                                       
                                                                       printf("from %s\n",data->get_string().c_str());
@@ -192,6 +140,7 @@ int SocketIOOperation::beginConnection(const char *url)
     sclient.socket()->on("ice", sio::socket::event_listener_aux([&](string const&name,
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
+                                                                      printf("----------in ice-------------\n");
                                                                       printf("%s",data->get_string().c_str());
                                                                   }));
 
