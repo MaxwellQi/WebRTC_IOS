@@ -12,6 +12,7 @@
 #import <AppRTC/ARDAppClient.h>
 #import <AppRTC/RTCSessionDescription+JSON.h>
 #import "Const.h"
+#import "NSJSONSerialization+Qi.h"
 using namespace std;
 using namespace sio;
 #include <string.h>
@@ -49,35 +50,21 @@ void SocketIOOperation::onopen()
 const char* getUserName()
 {
     NSDictionary *dict = @{@"username":@"111111"};
-    if ([NSJSONSerialization isValidJSONObject:dict]) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *username_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        return [username_json UTF8String];
-    }
-    return NULL;
+    return [[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String];
 }
 
 const char* getResponseParam()
 {
     NSDictionary *dict = @{@"to":@"222222",@"response":@"true"};
-    if ([NSJSONSerialization isValidJSONObject:dict]) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *username_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        return [username_json UTF8String];
-    }
-    return NULL;
+    return [[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String];
 }
 
 void SocketIOOperation::postanswer(const char* sdp)
 {
     std::string strsdp(sdp);
     NSDictionary *dict = @{@"to":@"222222",@"type":@"answer",@"sdp":[NSString stringWithUTF8String:sdp]};
-    if ([NSJSONSerialization isValidJSONObject:dict]) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *offer_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *offer_json = [NSJSONSerialization JSONStringWithJSONObject:dict];
+    if ([offer_json length] > 0) {
         string answerparam([offer_json UTF8String]);
         sclient.socket()->emit("answer",answerparam);
     }
@@ -87,10 +74,8 @@ void SocketIOOperation::postice(const char* candidate,const char* sdpMid,const c
 {
     NSDictionary *dict = @{@"to":@"222222",@"candidate":[NSString stringWithUTF8String:candidate],@"sdpMid":[NSString stringWithUTF8String:sdpMid],@"sdpMLineIndex":[NSString stringWithUTF8String:sdpMLineIndex]};
     
-    if ([NSJSONSerialization isValidJSONObject:dict]) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *offer_json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *offer_json = [NSJSONSerialization JSONStringWithJSONObject:dict];
+    if ([offer_json length] > 0) {
         string iceparam([offer_json UTF8String]);
         sclient.socket()->emit("ice",iceparam);
     }
