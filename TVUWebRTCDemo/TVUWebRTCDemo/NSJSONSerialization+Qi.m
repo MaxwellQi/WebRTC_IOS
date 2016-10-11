@@ -19,4 +19,15 @@
     }
     return NULL;
 }
+
++ (NSString *)getJsonValueWithKey:(NSString *)key jsonString:(NSString *)jsonstr
+{
+    if ([jsonstr length] > 0) {
+        NSData *data = [jsonstr dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+        return [dict objectForKey:key];
+    }
+    return NULL;
+}
 @end

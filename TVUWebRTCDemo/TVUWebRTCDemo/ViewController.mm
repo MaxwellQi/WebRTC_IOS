@@ -182,7 +182,6 @@ extern std::string remoteSessionDes;
     _socketOperation->setTvuusernumber(std::string([userName UTF8String]));
     dispatch_queue_t global_queue =  dispatch_queue_create("global_queue", DISPATCH_QUEUE_PRIORITY_DEFAULT);
     dispatch_async(global_queue, ^{
-        
         _socketOperation->beginConnection("heheda"); // connection
     });
 }

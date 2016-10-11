@@ -18,4 +18,16 @@
  *  @return json string
  */
 + (NSString *)JSONStringWithJSONObject:(id)obj;
+
+/**
+ *  Get json value though key .
+ *
+ *  @param key     json key
+ *  @param jsonstr json string. The jsonstr must have the following properties:
+            - jsonstr must be a simple json string
+            - jsonstr's format like this: {"key","value"} . Only support this format.
+ *
+ *  @return json's value
+ */
++ (NSString *)getJsonValueWithKey:(NSString *)key jsonString:(NSString *)jsonstr;
 @end

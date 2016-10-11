@@ -19,7 +19,6 @@ using namespace sio;
 
 string remoteSessionDes;
 
-const char* getUserName();
 SocketIOOperation::SocketIOOperation()
 {
 
@@ -57,12 +56,6 @@ void SocketIOOperation::onopen()
     std::string requestparam_login([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
     printf("qizhang---debug---login params---%s",requestparam_login.c_str());
     sclient.socket()->emit("login",requestparam_login);
-}
-
-const char* getUserName()
-{
-    NSDictionary *dict = @{@"username":@"111111"};
-    return [[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String];
 }
 
 const char* getResponseParam()
@@ -124,6 +117,11 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                   {
                                                                       printf("------------offer begin----------\n");
                                                                       remoteSessionDes = data->get_string();
+                                                                      
+                                                                      NSString *offer_response = [NSString stringWithUTF8String:data->get_string().c_str()];
+                                                                      
+                                                                      NSLog(@"qizhang----debug----call from ---%@",[NSJSONSerialization getJsonValueWithKey:@"from" jsonString:offer_response]);
+                                                                      
                                                                       printf("from %s\n",data->get_string().c_str());
                                                                       printf("------------offer end----------\n");
                                                                   }));
