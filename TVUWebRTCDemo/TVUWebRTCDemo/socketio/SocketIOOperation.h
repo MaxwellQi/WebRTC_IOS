@@ -24,9 +24,15 @@ public:
     int login(const char* username);
     void postanswer(const char* sdp);
     void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
+    void postResponse(bool isAccept);
+    
     void setTvuusernumber(std::string tvuusernumber);
     std::string getTvuusernumber();
     bool isLoginTVUWebrtc();
+    void setTvucallfromnumber(std::string tvucallfromnumber);
+    std::string getTvucallfromnumber();
+    void setTvuIsAcceptCall(bool tvuIsAcceptCall);
+    bool getTvuIsAcceptCall();
     
 private:
     sio::client sclient;
@@ -35,6 +41,7 @@ private:
     std::string tvuusernumber;
     std::string tvucallfromnumber;
     bool tvuLoginWebrtcStatus;
+    bool tvuIsAcceptCall;
 };
 
 #endif /* SocketIOOperation_hpp */
