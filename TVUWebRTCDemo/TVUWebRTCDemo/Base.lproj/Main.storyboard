@@ -91,25 +91,37 @@
                                             <action selector="onpressedbuttonCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xPe-vP-4sK"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEn-ld-qaw">
+                                        <rect key="frame" x="144" y="123" width="312" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="312" id="7lM-Vm-cVE"/>
+                                            <constraint firstAttribute="height" constant="21" id="P60-Jn-clL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="148" id="657-ot-Eno"/>
+                                    <constraint firstItem="KEn-ld-qaw" firstAttribute="top" secondItem="yDB-li-by1" secondAttribute="bottom" constant="13" id="UA4-UV-9nb"/>
+                                    <constraint firstItem="KEn-ld-qaw" firstAttribute="leading" secondItem="yDB-li-by1" secondAttribute="leading" id="Und-8N-SOq"/>
                                     <constraint firstItem="yDB-li-by1" firstAttribute="leading" secondItem="dYx-3s-vfZ" secondAttribute="leading" id="ivO-ox-hw6"/>
                                     <constraint firstItem="dYx-3s-vfZ" firstAttribute="top" secondItem="4gt-Uh-2id" secondAttribute="top" constant="30" id="tJq-nA-XIv"/>
                                     <constraint firstItem="yDB-li-by1" firstAttribute="top" secondItem="dYx-3s-vfZ" secondAttribute="bottom" constant="20" id="tyd-wk-7vi"/>
                                     <constraint firstItem="dYx-3s-vfZ" firstAttribute="centerX" secondItem="4gt-Uh-2id" secondAttribute="centerX" id="zTd-1a-xZf"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-fj-H3G" userLabel="acceptCallView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-fj-H3G" userLabel="acceptCallView">
                                 <rect key="frame" x="0.0" y="292" width="600" height="76"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O3C-M1-TU8">
-                                        <rect key="frame" x="167" y="8" width="80" height="60"/>
+                                        <rect key="frame" x="160" y="3" width="70" height="70"/>
                                         <color key="backgroundColor" red="0.059262203557174598" green="1" blue="0.13313862907125196" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="QEh-Pm-uTj"/>
-                                            <constraint firstAttribute="height" constant="60" id="WWY-XD-uDR"/>
+                                            <constraint firstAttribute="width" constant="70" id="QEh-Pm-uTj"/>
+                                            <constraint firstAttribute="height" constant="70" id="WWY-XD-uDR"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <state key="normal" title="Accept">
@@ -120,11 +132,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyA-YH-pMx">
-                                        <rect key="frame" x="353" y="8" width="80" height="60"/>
+                                        <rect key="frame" x="370" y="3" width="70" height="70"/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="MyL-XE-zqK"/>
-                                            <constraint firstAttribute="height" constant="60" id="lt4-TS-vqE"/>
+                                            <constraint firstAttribute="width" constant="70" id="MyL-XE-zqK"/>
+                                            <constraint firstAttribute="height" constant="70" id="lt4-TS-vqE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <state key="normal" title="Reject">
@@ -135,11 +147,19 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jn9-9H-zvB">
-                                        <rect key="frame" x="277" y="18" width="46" height="39"/>
+                                        <rect key="frame" x="260" y="-2" width="80" height="80"/>
+                                        <color key="backgroundColor" red="1" green="0.098959872305631857" blue="0.072242820934540264" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="Eyn-cf-s8F"/>
-                                            <constraint firstAttribute="height" constant="39" id="ydz-rU-e1U"/>
+                                            <constraint firstAttribute="width" constant="80" id="Eyn-cf-s8F"/>
+                                            <constraint firstAttribute="height" constant="80" id="ydz-rU-e1U"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="End">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onpressedbuttonEndCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BjL-5Q-qX7"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -168,10 +188,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="acceptBtn" destination="O3C-M1-TU8" id="txY-QK-SB6"/>
                         <outlet property="acceptCallView" destination="bmw-fj-H3G" id="EWa-11-x66"/>
                         <outlet property="callBtn" destination="yDB-li-by1" id="s8A-fW-jYO"/>
+                        <outlet property="calltipLabel" destination="KEn-ld-qaw" id="vz8-gR-xd1"/>
+                        <outlet property="endcallBtn" destination="jn9-9H-zvB" id="bu9-BW-SGs"/>
                         <outlet property="loginBtn" destination="kd1-0T-Jpl" id="yYG-J1-Vdb"/>
                         <outlet property="logintipLabel" destination="5VX-xC-Eig" id="hHM-nY-uZx"/>
+                        <outlet property="rejectBtn" destination="gyA-YH-pMx" id="2yg-mz-5lM"/>
                         <outlet property="rtcField" destination="dYx-3s-vfZ" id="Sg1-2b-jZh"/>
                         <outlet property="usernameField" destination="Gzm-xk-bY6" id="i9s-KS-kok"/>
                     </connections>

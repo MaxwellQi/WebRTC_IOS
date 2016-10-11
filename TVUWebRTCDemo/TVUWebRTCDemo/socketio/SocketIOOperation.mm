@@ -22,6 +22,7 @@ string remoteSessionDes;
 SocketIOOperation::SocketIOOperation()
 {
     tvuLoginWebrtcStatus = false;
+    tvucallfromnumber = "";
 }
 
 SocketIOOperation::~SocketIOOperation()
@@ -48,9 +49,29 @@ std::string SocketIOOperation::getTvuusernumber()
     return this->tvuusernumber;
 }
 
+void SocketIOOperation::setTvucallfromnumber(std::string tvucallfromnumber)
+{
+    this->tvucallfromnumber = tvucallfromnumber;
+}
+
+std::string SocketIOOperation::getTvucallfromnumber()
+{
+    return this->tvucallfromnumber;
+}
+
 bool SocketIOOperation::isLoginTVUWebrtc()
 {
     return this->tvuLoginWebrtcStatus;
+}
+
+void SocketIOOperation::setTvuIsAcceptCall(bool tvuIsAcceptCall)
+{
+    this->tvuIsAcceptCall = tvuIsAcceptCall;
+}
+
+bool SocketIOOperation::getTvuIsAcceptCall()
+{
+    return this->tvuIsAcceptCall;
 }
 
 void SocketIOOperation::onopen()
@@ -86,6 +107,17 @@ void SocketIOOperation::postice(const char* candidate,const char* sdpMid,const c
     }
 }
 
+void SocketIOOperation::postResponse(bool isAccept)
+{
+    NSString *response_value = isAccept ? @"true" : @"false";
+    NSString *callfrom = [NSString stringWithUTF8String:tvucallfromnumber.c_str()];
+    NSDictionary *dict = @{@"to":callfrom,@"response":response_value};
+    string responseParam([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
+    sclient.socket()->emit("call_response",responseParam);
+    printf("get call request\n");
+
+}
+
 int SocketIOOperation::beginConnection(const char *url)
 {
     sclient.set_open_listener(std::bind(&SocketIOOperation::onopen, this));
@@ -104,11 +136,7 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                              NSString *responseData = [NSString stringWithUTF8String:data->get_string().c_str()];
                                                                              NSString *callfrom = [NSJSONSerialization getJsonValueWithKey:@"from" jsonString:responseData];
                                                                              tvucallfromnumber = std::string([callfrom UTF8String]);
-                                                                             NSDictionary *dict = @{@"to":callfrom,@"response":@"true"};
-                                                                             string responseParam([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
-                                                                             sclient.socket()->emit("call_response",responseParam);
-                                                                             printf("get call request\n");
-                                                                         }));
+                                                            }));
     
     sclient.socket()->on("call_response", sio::socket::event_listener_aux([&](string const&name,
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)

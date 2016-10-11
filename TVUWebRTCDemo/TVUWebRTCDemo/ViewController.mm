@@ -131,13 +131,10 @@ extern std::string remoteSessionDes;
 //    [self.peerConnection createOfferWithDelegate:self constraints:constraints];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+- (void)beginCommunication
 {
-
-    
     // create answer
     NSString *remoteSessionDescription = [NSString stringWithUTF8String:remoteSessionDes.c_str()];
-    
     if ([remoteSessionDescription length] > 0) {
         NSData *jsonData = [remoteSessionDescription dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:NULL];
@@ -151,12 +148,10 @@ extern std::string remoteSessionDes;
         RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
                                             @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
                                                                                  optionalConstraints: nil];
-
         [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
-        
     }
-    
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -177,6 +172,7 @@ extern std::string remoteSessionDes;
 
 - (void)refreshUIElements
 {
+    // Check user is login or not
     if (_socketOperation->isLoginTVUWebrtc()) {
         self.loginBtn.enabled = NO;
         self.loginBtn.backgroundColor = [UIColor grayColor];
@@ -188,7 +184,16 @@ extern std::string remoteSessionDes;
         self.loginBtn.backgroundColor = [UIColor blueColor];
         self.logintipLabel.text = @"Please login";
     }
-
+    
+    // Check if there is a phone call
+    /* note: if reject a phone, should clear tvucallfromnumber */
+    if (_socketOperation->getTvucallfromnumber().length() > 0) {
+        self.acceptCallView.hidden = NO;
+    }
+    else
+    {
+        self.acceptCallView.hidden = YES;
+    }
 }
 
 - (IBAction)onpressedbuttonLogin:(id)sender {
@@ -206,13 +211,31 @@ extern std::string remoteSessionDes;
 
 - (IBAction)onpressedbuttonCall:(id)sender {
     
-    
 }
 
 - (IBAction)onpressedbuttonAcceptCall:(id)sender {
+    _socketOperation->postResponse(true);
+    sleep(2); // wait a moment
+    _socketOperation->setTvuIsAcceptCall(true);
+    
+    [self beginCommunication];
+    self.endcallBtn.hidden = NO;
+    self.acceptBtn.hidden = YES;
+    self.rejectBtn.hidden = YES;
+    self.calltipLabel.text = @"In call";
+    
 }
 
 - (IBAction)onpressedbuttonRejectCall:(id)sender {
+    _socketOperation->postResponse(false);
+    sleep(3);
+    _socketOperation->setTvuIsAcceptCall(false);
+    
+    _socketOperation->setTvucallfromnumber("");
+    self.calltipLabel.text = @" ";
+}
+
+- (IBAction)onpressedbuttonEndCall:(id)sender {
 }
 
 #pragma mark -RTCSessionDescriptionDelegate
