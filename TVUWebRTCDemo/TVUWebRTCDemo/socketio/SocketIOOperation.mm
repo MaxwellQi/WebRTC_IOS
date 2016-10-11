@@ -38,12 +38,25 @@ SocketIOOperation * SocketIOOperation::getInstance()
     return m_instance;
 }
 
+void SocketIOOperation::setTvuusernumber(std::string tvuusernumber)
+{
+    this->tvuusernumber = tvuusernumber;
+}
+
+std::string SocketIOOperation::getTvuusernumber()
+{
+    return this->tvuusernumber;
+}
+
 void SocketIOOperation::onopen()
 {
     printf("connect succ\n");
-    std::string username(getUserName());
-    printf("qizhang---debug---login params---%s",username.c_str());
-    sclient.socket()->emit("login",username);
+    NSString *usernumber = [NSString stringWithCString:this->getTvuusernumber().c_str() encoding:NSUTF8StringEncoding];
+    NSDictionary *dict = @{@"username":usernumber};
+
+    std::string requestparam_login([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
+    printf("qizhang---debug---login params---%s",requestparam_login.c_str());
+    sclient.socket()->emit("login",requestparam_login);
 }
 
 const char* getUserName()

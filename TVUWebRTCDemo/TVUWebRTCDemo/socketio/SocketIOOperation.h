@@ -24,11 +24,14 @@ public:
     int login(const char* username);
     void postanswer(const char* sdp);
     void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
+    void setTvuusernumber(std::string tvuusernumber);
+    std::string getTvuusernumber();
     
 private:
     sio::client sclient;
     void onopen();
     static SocketIOOperation * m_instance;
+    std::string tvuusernumber;
 };
 
 #endif /* SocketIOOperation_hpp */

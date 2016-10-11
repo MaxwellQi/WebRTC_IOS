@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 @interface ViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *userNameField;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
+@property (weak, nonatomic) IBOutlet UITextField *usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *rtcField;
+@property (weak, nonatomic) IBOutlet UILabel *logintipLabel;
+
+
+- (IBAction)onpressedbuttonLogin:(id)sender;
 - (IBAction)onpressedbuttonCall:(id)sender;
 
 @end

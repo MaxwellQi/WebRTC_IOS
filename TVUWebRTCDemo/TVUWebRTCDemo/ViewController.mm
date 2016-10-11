@@ -171,7 +171,25 @@ extern std::string remoteSessionDes;
     }];
     
     _socketOperation = new SocketIOOperation();
-    _socketOperation->beginConnection("heheda"); // connection
+}
+
+- (IBAction)onpressedbuttonLogin:(id)sender {
+    NSString *userName = self.usernameField.text;
+    if ([userName length] <= 0) {
+        self.logintipLabel.text = @"Please input user name";
+        return;
+    }
+    _socketOperation->setTvuusernumber(std::string([userName UTF8String]));
+    dispatch_queue_t global_queue =  dispatch_queue_create("global_queue", DISPATCH_QUEUE_PRIORITY_DEFAULT);
+    dispatch_async(global_queue, ^{
+        
+        _socketOperation->beginConnection("heheda"); // connection
+    });
+}
+
+- (IBAction)onpressedbuttonCall:(id)sender {
+    
+    
 }
 
 #pragma mark -RTCSessionDescriptionDelegate
@@ -261,11 +279,6 @@ didSetSessionDescriptionWithError:(NSError *)error
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)onpressedbuttonCall:(id)sender {
-
-    
 }
 
 @end
