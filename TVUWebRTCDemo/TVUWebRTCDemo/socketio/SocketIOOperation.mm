@@ -29,6 +29,7 @@ SocketIOOperation::~SocketIOOperation()
 
 }
 
+SocketIOOperation * SocketIOOperation::m_instance = NULL;
 SocketIOOperation * SocketIOOperation::getInstance()
 {
     if (m_instance == NULL) {
@@ -58,16 +59,11 @@ void SocketIOOperation::onopen()
     sclient.socket()->emit("login",requestparam_login);
 }
 
-const char* getResponseParam()
-{
-    NSDictionary *dict = @{@"to":@"222222",@"response":@"true"};
-    return [[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String];
-}
-
 void SocketIOOperation::postanswer(const char* sdp)
 {
+    NSString *callfrom = [NSString stringWithUTF8String:tvucallfromnumber.c_str()];
     std::string strsdp(sdp);
-    NSDictionary *dict = @{@"to":@"222222",@"type":@"answer",@"sdp":[NSString stringWithUTF8String:sdp]};
+    NSDictionary *dict = @{@"to":callfrom,@"type":@"answer",@"sdp":[NSString stringWithUTF8String:sdp]};
     NSString *offer_json = [NSJSONSerialization JSONStringWithJSONObject:dict];
     if ([offer_json length] > 0) {
         string answerparam([offer_json UTF8String]);
@@ -77,7 +73,8 @@ void SocketIOOperation::postanswer(const char* sdp)
 
 void SocketIOOperation::postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex)
 {
-    NSDictionary *dict = @{@"to":@"222222",@"candidate":[NSString stringWithUTF8String:candidate],@"sdpMid":[NSString stringWithUTF8String:sdpMid],@"sdpMLineIndex":[NSString stringWithUTF8String:sdpMLineIndex]};
+    NSString *callfrom = [NSString stringWithUTF8String:tvucallfromnumber.c_str()];
+    NSDictionary *dict = @{@"to":callfrom,@"candidate":[NSString stringWithUTF8String:candidate],@"sdpMid":[NSString stringWithUTF8String:sdpMid],@"sdpMLineIndex":[NSString stringWithUTF8String:sdpMLineIndex]};
     
     NSString *offer_json = [NSJSONSerialization JSONStringWithJSONObject:dict];
     if ([offer_json length] > 0) {
@@ -100,9 +97,13 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                              message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                          {
                                                                              // response
-                                                                             string responseParam(getResponseParam());
+                                                                             NSString *responseData = [NSString stringWithUTF8String:data->get_string().c_str()];
+                                                                             NSString *callfrom = [NSJSONSerialization getJsonValueWithKey:@"from" jsonString:responseData];
+                                                                             tvucallfromnumber = std::string([callfrom UTF8String]);
+                                                                             NSDictionary *dict = @{@"to":callfrom,@"response":@"true"};
+                                                                             string responseParam([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
                                                                              sclient.socket()->emit("call_response",responseParam);
-                                                                             printf("sent call response\n");
+                                                                             printf("get call request\n");
                                                                          }));
     
     sclient.socket()->on("call_response", sio::socket::event_listener_aux([&](string const&name,
@@ -117,11 +118,6 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                   {
                                                                       printf("------------offer begin----------\n");
                                                                       remoteSessionDes = data->get_string();
-                                                                      
-                                                                      NSString *offer_response = [NSString stringWithUTF8String:data->get_string().c_str()];
-                                                                      
-                                                                      NSLog(@"qizhang----debug----call from ---%@",[NSJSONSerialization getJsonValueWithKey:@"from" jsonString:offer_response]);
-                                                                      
                                                                       printf("from %s\n",data->get_string().c_str());
                                                                       printf("------------offer end----------\n");
                                                                   }));

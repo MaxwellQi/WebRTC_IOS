@@ -32,6 +32,7 @@ private:
     void onopen();
     static SocketIOOperation * m_instance;
     std::string tvuusernumber;
+    std::string tvucallfromnumber;
 };
 
 #endif /* SocketIOOperation_hpp */
