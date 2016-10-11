@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <stdio.h>
+#include <functional>
+#include <thread>
+#include <SocketIO-Client-CPP/sio_client.h>
 
 @interface TVUARDClient : NSObject
 
+- (void)listeningEvent;
 @end

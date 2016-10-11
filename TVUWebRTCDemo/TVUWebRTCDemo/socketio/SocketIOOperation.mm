@@ -17,13 +17,12 @@ using namespace std;
 using namespace sio;
 #include <string.h>
 
-int socketioStatus;
 string remoteSessionDes;
 
 const char* getUserName();
 SocketIOOperation::SocketIOOperation()
 {
-    socketioStatus = 0;
+
 }
 
 SocketIOOperation::~SocketIOOperation()
@@ -88,10 +87,7 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
                                                                       bool res = data->get_map()["success"]->get_bool();
-                                                                      
                                                                       printf("socket.io---debug----login result:%d\n",res);
-                                                                      
-
                                                                   }));
     // bind other event
     sclient.socket()->on("call_request", sio::socket::event_listener_aux([&](string const&name,
@@ -101,7 +97,6 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                              string responseParam(getResponseParam());
                                                                              sclient.socket()->emit("call_response",responseParam);
                                                                              printf("sent call response\n");
-                                                                             
                                                                          }));
     
     sclient.socket()->on("call_response", sio::socket::event_listener_aux([&](string const&name,
@@ -109,7 +104,6 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                   {
                                                                       printf("get call response\n");
                                                                       printf("%s",data->get_string().c_str());
-                                                                      socketioStatus = 1;
                                                                   }));
     
     sclient.socket()->on("offer", sio::socket::event_listener_aux([&](string const&name,
@@ -117,9 +111,7 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                   {
                                                                       printf("------------offer begin----------\n");
                                                                       remoteSessionDes = data->get_string();
-                                                                      
                                                                       printf("from %s\n",data->get_string().c_str());
-
                                                                       printf("------------offer end----------\n");
                                                                   }));
     sclient.socket()->on("ice", sio::socket::event_listener_aux([&](string const&name,
@@ -131,7 +123,6 @@ int SocketIOOperation::beginConnection(const char *url)
 
     // begin connect
     sclient.connect(WebRTCServer);
-    
     return 0;
 }
 

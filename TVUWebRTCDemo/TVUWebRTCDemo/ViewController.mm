@@ -27,7 +27,6 @@
 #import <AppRTC/RTCICECandidate+JSON.h>
 #import <AVFoundation/AVFoundation.h>
 #import "Const.h"
-extern int socketioStatus;
 extern std::string remoteSDP;
 extern std::string remoteType;
 extern std::string remoteSessionDes;
