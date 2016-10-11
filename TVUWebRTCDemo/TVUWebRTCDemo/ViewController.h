@@ -15,9 +15,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *callBtn;
 @property (weak, nonatomic) IBOutlet UILabel *logintipLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *acceptCallView;
+
+
 
 - (IBAction)onpressedbuttonLogin:(id)sender;
 - (IBAction)onpressedbuttonCall:(id)sender;
+- (IBAction)onpressedbuttonAcceptCall:(id)sender;
+- (IBAction)onpressedbuttonRejectCall:(id)sender;
+
+
 
 @end
 
