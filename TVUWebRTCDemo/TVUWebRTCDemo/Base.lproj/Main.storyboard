@@ -101,6 +101,58 @@
                                     <constraint firstItem="dYx-3s-vfZ" firstAttribute="centerX" secondItem="4gt-Uh-2id" secondAttribute="centerX" id="zTd-1a-xZf"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-fj-H3G" userLabel="acceptCallView">
+                                <rect key="frame" x="0.0" y="292" width="600" height="76"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O3C-M1-TU8">
+                                        <rect key="frame" x="167" y="8" width="80" height="60"/>
+                                        <color key="backgroundColor" red="0.059262203557174598" green="1" blue="0.13313862907125196" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="QEh-Pm-uTj"/>
+                                            <constraint firstAttribute="height" constant="60" id="WWY-XD-uDR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <state key="normal" title="Accept">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onpressedbuttonAcceptCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jba-Yv-kOF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyA-YH-pMx">
+                                        <rect key="frame" x="353" y="8" width="80" height="60"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="MyL-XE-zqK"/>
+                                            <constraint firstAttribute="height" constant="60" id="lt4-TS-vqE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <state key="normal" title="Reject">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onpressedbuttonRejectCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wag-3v-pZC"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jn9-9H-zvB">
+                                        <rect key="frame" x="277" y="18" width="46" height="39"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="Eyn-cf-s8F"/>
+                                            <constraint firstAttribute="height" constant="39" id="ydz-rU-e1U"/>
+                                        </constraints>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="O3C-M1-TU8" firstAttribute="centerY" secondItem="bmw-fj-H3G" secondAttribute="centerY" id="BIz-ij-vFy"/>
+                                    <constraint firstItem="jn9-9H-zvB" firstAttribute="leading" secondItem="O3C-M1-TU8" secondAttribute="trailing" constant="30" id="HNS-3d-5v1"/>
+                                    <constraint firstItem="gyA-YH-pMx" firstAttribute="leading" secondItem="jn9-9H-zvB" secondAttribute="trailing" constant="30" id="Qdr-uA-54k"/>
+                                    <constraint firstItem="jn9-9H-zvB" firstAttribute="centerX" secondItem="bmw-fj-H3G" secondAttribute="centerX" id="an5-53-vdj"/>
+                                    <constraint firstAttribute="height" constant="76" id="e9D-mp-hBu"/>
+                                    <constraint firstItem="gyA-YH-pMx" firstAttribute="centerY" secondItem="bmw-fj-H3G" secondAttribute="centerY" id="kzY-QJ-gsC"/>
+                                    <constraint firstItem="jn9-9H-zvB" firstAttribute="centerY" secondItem="bmw-fj-H3G" secondAttribute="centerY" id="lMZ-nV-3iF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -108,11 +160,15 @@
                             <constraint firstItem="jdS-qo-2iE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="7cO-TY-rDz"/>
                             <constraint firstAttribute="trailing" secondItem="jdS-qo-2iE" secondAttribute="trailing" id="Asq-xW-uYV"/>
                             <constraint firstItem="4gt-Uh-2id" firstAttribute="top" secondItem="jdS-qo-2iE" secondAttribute="bottom" id="L4b-ds-D4H"/>
+                            <constraint firstItem="bmw-fj-H3G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NoM-fH-dTH"/>
                             <constraint firstItem="4gt-Uh-2id" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Pmc-Rp-zms"/>
+                            <constraint firstItem="bmw-fj-H3G" firstAttribute="top" secondItem="4gt-Uh-2id" secondAttribute="bottom" constant="16" id="Q1B-VZ-A2h"/>
+                            <constraint firstAttribute="trailing" secondItem="bmw-fj-H3G" secondAttribute="trailing" id="b73-BV-bJT"/>
                             <constraint firstAttribute="trailing" secondItem="4gt-Uh-2id" secondAttribute="trailing" id="xpA-YH-J4G"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="acceptCallView" destination="bmw-fj-H3G" id="EWa-11-x66"/>
                         <outlet property="callBtn" destination="yDB-li-by1" id="s8A-fW-jYO"/>
                         <outlet property="loginBtn" destination="kd1-0T-Jpl" id="yYG-J1-Vdb"/>
                         <outlet property="logintipLabel" destination="5VX-xC-Eig" id="hHM-nY-uZx"/>

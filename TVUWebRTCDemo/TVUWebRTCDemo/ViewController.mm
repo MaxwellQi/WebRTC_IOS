@@ -209,6 +209,12 @@ extern std::string remoteSessionDes;
     
 }
 
+- (IBAction)onpressedbuttonAcceptCall:(id)sender {
+}
+
+- (IBAction)onpressedbuttonRejectCall:(id)sender {
+}
+
 #pragma mark -RTCSessionDescriptionDelegate
 // Called when creating a session.
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
