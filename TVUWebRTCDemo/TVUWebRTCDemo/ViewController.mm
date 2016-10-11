@@ -171,6 +171,24 @@ extern std::string remoteSessionDes;
     }];
     
     _socketOperation = new SocketIOOperation();
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refreshUIElements) userInfo:nil repeats:YES];
+}
+
+- (void)refreshUIElements
+{
+    if (_socketOperation->isLoginTVUWebrtc()) {
+        self.loginBtn.enabled = NO;
+        self.loginBtn.backgroundColor = [UIColor grayColor];
+        self.logintipLabel.text = @"Login success";
+    }
+    else
+    {
+        self.loginBtn.enabled = YES;
+        self.loginBtn.backgroundColor = [UIColor blueColor];
+        self.logintipLabel.text = @"Please login";
+    }
+
 }
 
 - (IBAction)onpressedbuttonLogin:(id)sender {

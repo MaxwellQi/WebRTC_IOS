@@ -26,6 +26,7 @@ public:
     void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
     void setTvuusernumber(std::string tvuusernumber);
     std::string getTvuusernumber();
+    bool isLoginTVUWebrtc();
     
 private:
     sio::client sclient;
@@ -33,6 +34,7 @@ private:
     static SocketIOOperation * m_instance;
     std::string tvuusernumber;
     std::string tvucallfromnumber;
+    bool tvuLoginWebrtcStatus;
 };
 
 #endif /* SocketIOOperation_hpp */

@@ -21,7 +21,7 @@ string remoteSessionDes;
 
 SocketIOOperation::SocketIOOperation()
 {
-
+    tvuLoginWebrtcStatus = false;
 }
 
 SocketIOOperation::~SocketIOOperation()
@@ -48,14 +48,17 @@ std::string SocketIOOperation::getTvuusernumber()
     return this->tvuusernumber;
 }
 
+bool SocketIOOperation::isLoginTVUWebrtc()
+{
+    return this->tvuLoginWebrtcStatus;
+}
+
 void SocketIOOperation::onopen()
 {
     printf("connect succ\n");
     NSString *usernumber = [NSString stringWithCString:this->getTvuusernumber().c_str() encoding:NSUTF8StringEncoding];
     NSDictionary *dict = @{@"username":usernumber};
-
     std::string requestparam_login([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
-    printf("qizhang---debug---login params---%s",requestparam_login.c_str());
     sclient.socket()->emit("login",requestparam_login);
 }
 
@@ -90,6 +93,7 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
                                                                       bool res = data->get_map()["success"]->get_bool();
+                                                                     tvuLoginWebrtcStatus = res;
                                                                       printf("socket.io---debug----login result:%d\n",res);
                                                                   }));
     // bind other event

@@ -113,6 +113,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="callBtn" destination="yDB-li-by1" id="s8A-fW-jYO"/>
+                        <outlet property="loginBtn" destination="kd1-0T-Jpl" id="yYG-J1-Vdb"/>
                         <outlet property="logintipLabel" destination="5VX-xC-Eig" id="hHM-nY-uZx"/>
                         <outlet property="rtcField" destination="dYx-3s-vfZ" id="Sg1-2b-jZh"/>
                         <outlet property="usernameField" destination="Gzm-xk-bY6" id="i9s-KS-kok"/>
