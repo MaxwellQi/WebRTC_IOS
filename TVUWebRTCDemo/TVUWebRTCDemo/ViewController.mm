@@ -210,7 +210,15 @@ extern std::string remoteSessionDes;
 }
 
 - (IBAction)onpressedbuttonCall:(id)sender {
-    
+    NSString *rtcNumber = self.rtcField.text;
+    if ([rtcNumber length] <= 0) {
+        self.calltipLabel.text = @"Please input rtc number";
+        return;
+    }
+    dispatch_queue_t global_queue =  dispatch_queue_create("global_queue1", DISPATCH_QUEUE_PRIORITY_DEFAULT);
+    dispatch_async(global_queue, ^{
+         _socketOperation->postCallRequest(std::string([rtcNumber UTF8String]));
+    });
 }
 
 - (IBAction)onpressedbuttonAcceptCall:(id)sender {
