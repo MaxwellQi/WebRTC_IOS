@@ -118,6 +118,14 @@ void SocketIOOperation::postResponse(bool isAccept)
 
 }
 
+void SocketIOOperation::postCallRequest(std::string tvuusernumber)
+{
+    NSString *userid = [NSString stringWithUTF8String:tvuusernumber.c_str()];
+    NSDictionary *dict = @{@"ids":@[userid]};
+    string request_param([[NSJSONSerialization JSONStringWithJSONObject:dict] UTF8String]);
+    sclient.socket()->emit("call_request",request_param);
+}
+
 int SocketIOOperation::beginConnection(const char *url)
 {
     sclient.set_open_listener(std::bind(&SocketIOOperation::onopen, this));

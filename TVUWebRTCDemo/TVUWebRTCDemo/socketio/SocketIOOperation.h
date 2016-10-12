@@ -25,6 +25,7 @@ public:
     void postanswer(const char* sdp);
     void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
     void postResponse(bool isAccept);
+    void postCallRequest(std::string tvuusernumber);
     
     void setTvuusernumber(std::string tvuusernumber);
     std::string getTvuusernumber();
