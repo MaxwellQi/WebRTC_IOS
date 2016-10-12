@@ -26,6 +26,7 @@ public:
     void postice(const char* candidate,const char* sdpMid,const char* sdpMLineIndex);
     void postResponse(bool isAccept);
     void postCallRequest(std::string tvuusernumber);
+    void postOffer(std::string offerParam);
     
     void setTvuusernumber(std::string tvuusernumber);
     std::string getTvuusernumber();
