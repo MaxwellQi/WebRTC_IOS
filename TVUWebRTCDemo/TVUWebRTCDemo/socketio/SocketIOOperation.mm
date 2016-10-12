@@ -126,6 +126,11 @@ void SocketIOOperation::postCallRequest(std::string tvuusernumber)
     sclient.socket()->emit("call_request",request_param);
 }
 
+void SocketIOOperation::postOffer(std::string offerParam)
+{
+    sclient.socket()->emit("offer",offerParam);
+}
+
 int SocketIOOperation::beginConnection(const char *url)
 {
     sclient.set_open_listener(std::bind(&SocketIOOperation::onopen, this));

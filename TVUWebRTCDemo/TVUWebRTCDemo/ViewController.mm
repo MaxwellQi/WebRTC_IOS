@@ -131,7 +131,7 @@ extern std::string remoteSessionDes;
 //    [self.peerConnection createOfferWithDelegate:self constraints:constraints];
 }
 
-- (void)beginCommunication
+- (void)beginAcceptCall
 {
     // create answer
     NSString *remoteSessionDescription = [NSString stringWithUTF8String:remoteSessionDes.c_str()];
@@ -150,6 +150,15 @@ extern std::string remoteSessionDes;
                                                                                  optionalConstraints: nil];
         [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
     }
+}
+
+- (void)beginPostCall
+{
+    RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
+                                        @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
+                                                                             optionalConstraints: nil];
+    [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
+    
 }
 
 
@@ -218,6 +227,10 @@ extern std::string remoteSessionDes;
     dispatch_queue_t global_queue =  dispatch_queue_create("global_queue1", DISPATCH_QUEUE_PRIORITY_DEFAULT);
     dispatch_async(global_queue, ^{
          _socketOperation->postCallRequest(std::string([rtcNumber UTF8String]));
+        
+
+        [self beginPostCall];
+        
     });
 }
 
@@ -226,7 +239,7 @@ extern std::string remoteSessionDes;
     sleep(2); // wait a moment
     _socketOperation->setTvuIsAcceptCall(true);
     
-    [self beginCommunication];
+    [self beginAcceptCall];
     self.endcallBtn.hidden = NO;
     self.acceptBtn.hidden = YES;
     self.rejectBtn.hidden = YES;
@@ -255,9 +268,10 @@ didCreateSessionDescription:(RTCSessionDescription *)sdp
     if (sdp == NULL) {
         return;
     }
-    [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
-    self.m_strsdp = [sdp description];
-    _socketOperation->postanswer([[sdp description] UTF8String]);
+    NSLog(@"qizhang----debug-----enenenenenenenenenen-------%@",sdp.description);
+//    [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
+//    self.m_strsdp = [sdp description];
+//    _socketOperation->postanswer([[sdp description] UTF8String]);
 }
 
 // Called when setting a local or remote description.
