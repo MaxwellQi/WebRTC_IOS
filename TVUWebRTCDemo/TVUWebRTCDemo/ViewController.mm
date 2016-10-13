@@ -26,10 +26,18 @@
 #import <libjingle_peerconnection/RTCSessionDescription.h>
 #import <AppRTC/RTCICECandidate+JSON.h>
 #import <AVFoundation/AVFoundation.h>
+#import "NSJSONSerialization+Qi.h"
 #import "Const.h"
 extern std::string remoteSDP;
 extern std::string remoteType;
 extern std::string remoteSessionDes;
+
+typedef enum
+{
+    TVUSDPTypeLocal = 0,
+    TVUSDPTypeRemote
+}TVUSDPType;
+
 @interface ViewController ()<RTCPeerConnectionDelegate,RTCSessionDescriptionDelegate>
 @property(nonatomic) SocketIOOperation *socketOperation;
 
@@ -38,8 +46,10 @@ extern std::string remoteSessionDes;
 @property (nonatomic,strong) RTCMediaStream *localStream;
 @property (nonatomic,strong) RTCAudioTrack *audioTrack;
 
-@property (nonatomic,strong) NSString *m_strsdp;
+@property (nonatomic,strong) RTCSessionDescription *m_sdp;
 @property (nonatomic,strong) NSString *m_stricecandidate;
+
+@property (nonatomic,assign) TVUSDPType sdpType;
 @end
 
 @implementation ViewController
@@ -154,10 +164,13 @@ extern std::string remoteSessionDes;
 
 - (void)beginPostCall
 {
+    
+    
     RTCMediaConstraints *constraints = [[RTCMediaConstraints alloc] initWithMandatoryConstraints:
                                         @[[[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"]]
                                                                              optionalConstraints: nil];
-    [self.peerConnection createAnswerWithDelegate:self constraints:constraints]; // create answer
+    
+    [self.peerConnection createOfferWithDelegate:self constraints:constraints]; // create offer
     
 }
 
@@ -228,13 +241,14 @@ extern std::string remoteSessionDes;
     dispatch_async(global_queue, ^{
          _socketOperation->postCallRequest(std::string([rtcNumber UTF8String]));
         
-
         [self beginPostCall];
-        
+         self.sdpType = TVUSDPTypeRemote;
     });
 }
 
 - (IBAction)onpressedbuttonAcceptCall:(id)sender {
+    self.sdpType = TVUSDPTypeLocal;
+    
     _socketOperation->postResponse(true);
     sleep(2); // wait a moment
     _socketOperation->setTvuIsAcceptCall(true);
@@ -259,6 +273,31 @@ extern std::string remoteSessionDes;
 - (IBAction)onpressedbuttonEndCall:(id)sender {
 }
 
+
+- (void)setSDPInfo
+{
+    switch (self.sdpType) {
+        case TVUSDPTypeLocal:
+        {
+            [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:self.m_sdp];
+            _socketOperation->postanswer([[self.m_sdp description] UTF8String]);
+        }
+            break;
+        case TVUSDPTypeRemote:
+        {
+            [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:self.m_sdp];
+            NSDictionary *dict = @{@"to":self.rtcField,@"sdp":self.m_sdp.description,@"type":@"offer"};
+            NSString *dict_jsonstr = [NSJSONSerialization JSONStringWithJSONObject:dict];
+            _socketOperation->postOffer(std::string([dict_jsonstr UTF8String]));
+        
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark -RTCSessionDescriptionDelegate
 // Called when creating a session.
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
@@ -268,17 +307,16 @@ didCreateSessionDescription:(RTCSessionDescription *)sdp
     if (sdp == NULL) {
         return;
     }
-//    NSLog(@"qizhang----debug-----enenenenenenenenenen-------%@",sdp.description);
-    [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
-    self.m_strsdp = [sdp description];
-    _socketOperation->postanswer([[sdp description] UTF8String]);
+    NSLog(@"qizhang----debug-----enenenenenenenenenen-------%@",sdp.description);
+    self.m_sdp = sdp;
+    [self setSDPInfo];
 }
 
 // Called when setting a local or remote description.
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
 didSetSessionDescriptionWithError:(NSError *)error
 {
-    NSLog(@"peerConnection-------error");
+    NSLog(@"peerConnection---------setting a local or remote description.");
 }
 
 #pragma mark -RTCPeerConnectionDelegate
