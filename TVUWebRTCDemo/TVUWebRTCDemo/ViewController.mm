@@ -268,10 +268,10 @@ didCreateSessionDescription:(RTCSessionDescription *)sdp
     if (sdp == NULL) {
         return;
     }
-    NSLog(@"qizhang----debug-----enenenenenenenenenen-------%@",sdp.description);
-//    [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
-//    self.m_strsdp = [sdp description];
-//    _socketOperation->postanswer([[sdp description] UTF8String]);
+//    NSLog(@"qizhang----debug-----enenenenenenenenenen-------%@",sdp.description);
+    [self.peerConnection setLocalDescriptionWithDelegate:self sessionDescription:sdp];
+    self.m_strsdp = [sdp description];
+    _socketOperation->postanswer([[sdp description] UTF8String]);
 }
 
 // Called when setting a local or remote description.
