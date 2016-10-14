@@ -151,7 +151,6 @@ typedef enum
         NSString *sdpstr = [dic objectForKey:@"sdp"];
         NSString *sdptype = [dic objectForKey:@"type"];
         RTCSessionDescription *sessionDescription = [[RTCSessionDescription alloc] initWithType:sdptype sdp:sdpstr];
-        NSLog(@"qizhang---set remote SessionDescription------%@",remoteSessionDescription.description);
         [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:sessionDescription];
         
         
@@ -286,10 +285,9 @@ typedef enum
         case TVUSDPTypeRemote:
         {
             [self.peerConnection setRemoteDescriptionWithDelegate:self sessionDescription:self.m_sdp];
-            NSDictionary *dict = @{@"to":self.rtcField,@"sdp":self.m_sdp.description,@"type":@"offer"};
+            NSDictionary *dict = @{@"to":self.rtcField.text,@"sdp":self.m_sdp.description,@"type":@"offer"};
             NSString *dict_jsonstr = [NSJSONSerialization JSONStringWithJSONObject:dict];
             _socketOperation->postOffer(std::string([dict_jsonstr UTF8String]));
-        
         }
             break;
             
@@ -307,7 +305,6 @@ didCreateSessionDescription:(RTCSessionDescription *)sdp
     if (sdp == NULL) {
         return;
     }
-    NSLog(@"qizhang----debug-----enenenenenenenenenen-------%@",sdp.description);
     self.m_sdp = sdp;
     [self setSDPInfo];
 }
@@ -365,7 +362,6 @@ didSetSessionDescriptionWithError:(NSError *)error
 - (void)peerConnection:(RTCPeerConnection *)peerConnection
        gotICECandidate:(RTCICECandidate *)candidate
 {
- 
     self.m_stricecandidate = [candidate description];
     NSData *data = [candidate JSONData];
     

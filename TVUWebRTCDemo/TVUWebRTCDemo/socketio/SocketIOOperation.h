@@ -27,6 +27,8 @@ public:
     void postResponse(bool isAccept);
     void postCallRequest(std::string tvuusernumber);
     void postOffer(std::string offerParam);
+    void postIce(std::string iceParam);
+    void postAnswer(std::string answerParam);
     
     void setTvuusernumber(std::string tvuusernumber);
     std::string getTvuusernumber();

@@ -107,6 +107,16 @@ void SocketIOOperation::postice(const char* candidate,const char* sdpMid,const c
     }
 }
 
+void SocketIOOperation::postIce(std::string iceParam)
+{
+    sclient.socket()->emit("ice",iceParam);
+}
+
+void SocketIOOperation::postAnswer(std::string answerParam)
+{
+    sclient.socket()->emit("answer",answerParam);
+}
+
 void SocketIOOperation::postResponse(bool isAccept)
 {
     NSString *response_value = isAccept ? @"true" : @"false";
@@ -155,7 +165,7 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
                                                                       printf("get call response\n");
-                                                                      printf("%s",data->get_string().c_str());
+                                                                      printf("%s\n",data->get_string().c_str());
                                                                   }));
     
     sclient.socket()->on("offer", sio::socket::event_listener_aux([&](string const&name,
@@ -170,9 +180,15 @@ int SocketIOOperation::beginConnection(const char *url)
                                                                       message::ptr const& data,bool isAck,message::list &ack_resp)
                                                                   {
                                                                       printf("----------in ice-------------\n");
-                                                                      printf("%s",data->get_string().c_str());
+                                                                      printf("%s\n",data->get_string().c_str());
                                                                   }));
-
+    
+    sclient.socket()->on("answer", sio::socket::event_listener_aux([&](string const&name,
+                                                                    message::ptr const& data,bool isAck,message::list &ack_resp)
+                                                                {
+                                                                    printf("----------answer-------------\n");
+                                                                    printf("%s\n",data->get_string().c_str());
+                                                                }));
     // begin connect
     sclient.connect(WebRTCServer);
     return 0;
